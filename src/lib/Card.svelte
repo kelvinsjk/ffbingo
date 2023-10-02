@@ -22,8 +22,6 @@
 	}
 
 	$: entryValid = entries.every((entry) => entry !== undefined);
-
-	$: console.log(entries);
 </script>
 
 <section class="bingo-wrapper">
@@ -137,9 +135,5 @@
 
 	.validity.entryValid {
 		background-color: #36d39980;
-	}
-
-	.modal-backdrop {
-		aspect-ratio: auto;
 	}
 </style>
