@@ -1,12 +1,20 @@
 <script lang="ts">
-	import Picker from '$lib/Picker.svelte';
+	import List from '$lib/List.svelte';
 </script>
 
 <svelte:head>
 	<title>Restaurants</title>
 </svelte:head>
 
-<div class="prose">
+<div class="prose mt-4">
 	<h1>Restaurants</h1>
-	<Picker />
+	<List />
 </div>
+
+<style>
+	.prose {
+		padding-inline: 1rem;
+		margin-inline: auto;
+		max-width: 80vw;
+	}
+</style>
