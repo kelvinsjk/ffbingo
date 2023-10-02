@@ -1,6 +1,5 @@
 <script lang="ts">
 	const entries: (number | undefined)[] = new Array(24).fill(undefined);
-	entries[0] = 0;
 
 	let active: number | undefined = undefined;
 
