@@ -2,6 +2,10 @@
 	import Card from '$lib/Card.svelte';
 </script>
 
+<svelte:head>
+	<title>USA Trip Bingo</title>
+</svelte:head>
+
 <main>
 	<div class="prose">
 		<h1>Bingo app demo</h1>
