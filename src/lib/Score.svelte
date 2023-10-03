@@ -1,50 +1,81 @@
 <script lang="ts">
-	// flip transition
+	// used in score page
 
 	import Qn from '$lib/Qn.svelte';
 	export let entries: number[] = Array.from(Array(24).keys());
 	export let revealed = [0, 1, 2, 3, 4, 5, 26, 7, 16, 21, 6, 17, 23, 8, 15, 19];
 
-	const rows = [0, 5, 10, 14, 19].reduce((acc, rowStart) => {
-		const rowHit = entries
-			.slice(rowStart, rowStart + (rowStart === 10 ? 4 : 5))
-			.every((entry) => revealed.includes(entry));
-		return acc + Number(rowHit);
-	}, 0);
-	const columns = [0, 1, 2, 3, 4].reduce((acc, colStart) => {
-		const col =
-			colStart === 2
-				? [entries[colStart], entries[colStart + 5], entries[colStart + 14], entries[colStart + 19]]
-				: [
-						entries[colStart],
-						entries[colStart + 5],
-						entries[colStart + 10],
-						entries[colStart + 14],
-						entries[colStart + 19]
-				  ];
-		const colHit = col.every((entry) => revealed.includes(entry));
-		return acc + Number(colHit);
-	}, 0);
-	const diag1 = Number([0, 6, 17, 23].every((entry) => revealed.includes(entries[entry])));
-	const diag2 = Number([4, 8, 15, 19].every((entry) => revealed.includes(entries[entry])));
-	const score = rows + columns + diag1 + diag2;
-	const cells = entries.reduce((acc, entry) => acc + Number(revealed.includes(entry)), 0);
+	export let score: number = 0;
+	export let cells: number = 0;
+	let rowInfo: boolean[]; // [r1, r2, r3, r4, r5, c1, c2, c3, c4, c5, d1, d2]
+	const rowCheck = [
+		[0, 5, 10],
+		[0, 6],
+		[0, 7],
+		[0, 8],
+		[0, 9, 11],
+		[1, 5],
+		[1, 6, 10],
+		[1, 7],
+		[1, 8, 11],
+		[1, 9],
+		[2, 5],
+		[2, 6],
+		[2, 8],
+		[2, 9],
+		[3, 5],
+		[3, 6, 11],
+		[3, 7],
+		[3, 8, 10],
+		[3, 9],
+		[4, 5, 11],
+		[4, 6],
+		[4, 7],
+		[4, 8],
+		[4, 9, 10]
+	];
+	$: [score, cells, rowInfo] = updateScore(revealed);
+
+	function updateScore(revealed: number[]): [number, number, boolean[]] {
+		const r1 = [0, 1, 2, 3, 4].every((entry) => revealed.includes(entries[entry]));
+		const r2 = [5, 6, 7, 8, 9].every((entry) => revealed.includes(entries[entry]));
+		const r3 = [10, 11, 12, 13].every((entry) => revealed.includes(entries[entry]));
+		const r4 = [14, 15, 16, 17, 18].every((entry) => revealed.includes(entries[entry]));
+		const r5 = [19, 20, 21, 22, 23].every((entry) => revealed.includes(entries[entry]));
+		const c1 = [0, 5, 10, 14, 19].every((entry) => revealed.includes(entries[entry]));
+		const c2 = [1, 6, 11, 15, 20].every((entry) => revealed.includes(entries[entry]));
+		const c3 = [2, 7, 16, 21].every((entry) => revealed.includes(entries[entry]));
+		const c4 = [3, 8, 12, 17, 22].every((entry) => revealed.includes(entries[entry]));
+		const c5 = [4, 9, 13, 18, 23].every((entry) => revealed.includes(entries[entry]));
+		const d1 = [0, 6, 17, 23].every((entry) => revealed.includes(entries[entry]));
+		const d2 = [4, 8, 15, 19].every((entry) => revealed.includes(entries[entry]));
+		const score = [r1, r2, r3, r4, r5, c1, c2, c3, c4, c5, d1, d2].reduce(
+			(acc, row) => acc + Number(row),
+			0
+		);
+		const cells = entries.reduce((acc, entry) => acc + Number(revealed.includes(entry)), 0);
+		return [score, cells, [r1, r2, r3, r4, r5, c1, c2, c3, c4, c5, d1, d2]];
+	}
 </script>
 
 <section class="scorecard-wrapper">
 	<div class="card">
 		{#each entries as entry, i}
 			{@const correct = revealed.includes(entry)}
-			<div class="item" class:correct>
-				{#if correct}
-					{@const id = `${Math.floor(entry / 26) + 1}-${(entry % 26) + 1}`}
+			{@const id = `${Math.floor(entry / 26) + 1}-${(entry % 26) + 1}`}
+			<div class="item swap swap-flip" class:swap-active={correct}>
+				<div class="swap-on" class:win={rowCheck[i].some((id) => rowInfo[id])}>
 					<img src="/logos/{id}.png" alt="logo" />
-				{:else}
+				</div>
+				<div class="swap-off">
 					<Qn />
-				{/if}
+				</div>
 			</div>
 		{/each}
-		<div class="item center china">
+		<div
+			class="item center china"
+			class:win={rowInfo[2] || rowInfo[7] || rowInfo[10] || rowInfo[11]}
+		>
 			<img src="/logos/china.png" alt="China Buffet" />
 		</div>
 	</div>
@@ -70,11 +101,17 @@
 		border: 1px solid #ccc;
 		display: grid;
 		place-items: center;
-		background-color: #fbbd2380;
 	}
 
-	.item.correct {
+	.swap-on {
 		border: 3px solid #36d399;
+	}
+	.swap-on.win {
+		border-color: red;
+	}
+
+	.swap-off {
+		background-color: #fbbd2380;
 	}
 
 	.item :global(*) {
@@ -86,6 +123,9 @@
 		grid-area: 3 / 3 / 3 / 3;
 		border: 3px solid #36d399;
 	}
+	.china.win {
+		border-color: red;
+	}
 
 	.scorecard-wrapper {
 		display: grid;
@@ -95,5 +135,9 @@
 
 	.score-container {
 		justify-content: center;
+	}
+
+	.swap {
+		cursor: default;
 	}
 </style>

@@ -1,5 +1,7 @@
 <script lang="ts">
-	const entries: (number | undefined)[] = new Array(24).fill(undefined);
+	// used in play page
+
+	export let entries: (number | undefined)[];
 
 	let active: number | undefined = undefined;
 

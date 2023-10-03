@@ -1,4 +1,6 @@
 <script lang="ts">
+	// used in card component
+
 	import { items } from './index';
 
 	export let selected: number | undefined = undefined;
@@ -22,7 +24,7 @@
 <style>
 	.picker {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(var(--icon-size, 50px), 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(var(--icon-size, 55px), 1fr));
 		gap: 0.25rem;
 	}
 	.item {

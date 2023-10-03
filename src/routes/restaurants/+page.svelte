@@ -1,5 +1,9 @@
 <script lang="ts">
 	import List from '$lib/List.svelte';
+	import type { PageData } from './$types';
+
+	export let data: PageData;
+	const revealed = data.revealed;
 </script>
 
 <svelte:head>
@@ -7,8 +11,10 @@
 </svelte:head>
 
 <div class="prose mt-4">
-	<h1>Restaurants</h1>
-	<List />
+	<h2>Restaurants left</h2>
+	<List complement={true} {revealed} />
+	<h2>Restaurants visited</h2>
+	<List {revealed} />
 </div>
 
 <style>

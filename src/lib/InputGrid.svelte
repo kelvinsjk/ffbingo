@@ -1,25 +1,23 @@
 <script lang="ts">
-	// used in restaurant page
-	import { items } from './index';
-
+	// used in score page
+	export let selected: number | undefined = undefined;
 	export let revealed: number[];
-	export let complement = false;
 
-	const indices = Array.from(Array(40).keys());
-	if (complement) {
-		revealed = indices.filter((i) => !revealed.includes(i));
-	}
-
-	const all = Object.entries(items);
-	const entries = revealed.map((i) => all[i]);
+	const all = Array.from(Array(40).keys());
+	$: leftovers = all.filter((i) => !revealed.includes(i));
 </script>
 
 <div class="picker">
-	{#each revealed as entry}
+	{#each leftovers as entry}
 		{@const id = `${Math.floor(entry / 26) + 1}-${(entry % 26) + 1}`}
-		<div class="item grid place-items-center">
+		<button
+			class="item"
+			on:click={() => {
+				selected = all.indexOf(entry);
+			}}
+		>
 			<img src="/logos/{id}.png" alt="logo" />
-		</div>
+		</button>
 	{/each}
 </div>
 
@@ -28,7 +26,9 @@
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(var(--icon-size, 55px), 1fr));
 		gap: 0.25rem;
-		row-gap: 0.5rem;
+	}
+	.item {
+		border: 1px solid #36d399;
 	}
 	.item,
 	.item img {
