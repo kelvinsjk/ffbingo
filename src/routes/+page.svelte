@@ -28,7 +28,7 @@
 		if (selected !== undefined) {
 			revealed = [...revealed, selected];
 			try {
-				await fetch('./api/updateRevealed', {
+				fetch('./api/updateRevealed', {
 					method: 'POST',
 					headers: {
 						'Content-Type': 'application/json'
