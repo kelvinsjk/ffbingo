@@ -87,7 +87,7 @@
 					}}>Input</button
 				>
 			</div>
-			<div class="prose">
+			<div class="prose grid">
 				<div class="indicator justify-self-center">
 					<h2 class="text-center mt-0">X's card</h2>
 					{#if leader === 2 && winner === 0}

@@ -5,6 +5,7 @@ export const load = async ({ locals: { supabase } }) => {
 		.from('bingo')
 		.select('*')
 		.eq('user_id', import.meta.env.VITE_UID1);
+	// TODO: UID1 change to user itself
 
 	const all = Array.from(Array(40).keys());
 	let entries = shuffle(all).slice(0, 24);
