@@ -1,63 +1,44 @@
 <script lang="ts">
 	import Score from '$lib/Score.svelte';
-	import shuffle from 'lodash/shuffle';
-	import InputGrid from '$lib/InputGrid.svelte';
+	import GuessGrid from '$lib/GuessGrid.svelte';
 	import type { PageData } from './$types';
 
 	let picker: HTMLDialogElement;
-	let selected: number | undefined = undefined;
-
-	let leader: 0 | 1 | 2 = 0;
-	let winner: 0 | 1 | 2 = 0;
-
-	let score = 0;
-	let cells = 0;
-	let score2 = 0;
-	let cells2 = 0;
 
 	export let data: PageData;
-	let entries = data.entries;
-	let revealed = data.revealed;
+	const { user, entry, others, supabase } = data;
+	let { guesses_attempted, guesses_correct } = data;
 
-	const all = Array.from(Array(40).keys());
-	const entries2 = shuffle(all).slice(0, 24);
+	const ids: { [key: string]: string } = {
+		'c6325958-199e-4c17-b5cf-049fa3207a8e': 'H',
+		'36dfc698-b4de-4ab8-9ed9-156475c87971': 'R',
+		'9eb3754b-5e80-419c-a9ce-907e87a7ef85': 'S',
+	};
 
-	$: updateRevealed(selected);
+	import { answers } from '$lib/answers';
+	import Leaderboard from '$lib/Leaderboard.svelte';
 
-	async function updateRevealed(selected: number | undefined) {
-		if (selected !== undefined) {
-			revealed = [...revealed, selected];
-			try {
-				fetch('./api/updateRevealed', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({ revealed })
-				});
-			} catch (error) {
-				console.log('fetch error', error);
+	let revealed = answers![guesses_attempted].revealed;
+	let nextAnswer = answers![guesses_attempted + 1]?.latest;
+
+	const stage = answers!.length - 1;
+
+	async function handleGuess(event: CustomEvent<{ correct: boolean }>) {
+		picker.close();
+		window.setTimeout(async () => {
+			guesses_attempted += 1;
+			revealed = answers![guesses_attempted]?.revealed;
+			nextAnswer = answers![guesses_attempted + 1]?.latest;
+			if (event.detail.correct) {
+				guesses_correct += 1;
 			}
-			selected = undefined;
-			picker.close();
-		}
+			await supabase
+				.from('bingo')
+				.update({ guesses_attempted, guesses_correct })
+				.eq('user_id', user);
+		}, 750);
+		// api call
 	}
-
-	function updateLeader(cell1: number, cell2: number) {
-		return cell1 > cell2 ? 1 : cell1 < cell2 ? 2 : 0;
-	}
-
-	$: leader = updateLeader(cells, cells2);
-
-	function updateWinner(score1: number, score2: number) {
-		if (winner === 0) {
-			return score1 > score2 ? 1 : score1 < score2 ? 2 : 0;
-		} else {
-			return winner;
-		}
-	}
-
-	$: winner = updateWinner(score, score2);
 </script>
 
 <svelte:head>
@@ -65,49 +46,65 @@
 </svelte:head>
 
 <main>
-	<div class="prose max-w-none">
-		<h1>Bingo app demo</h1>
-		<div class="grid cards">
-			<div class="prose grid">
-				<div class="indicator justify-self-center">
-					<h2 class="text-center mt-0">Your card</h2>
-					{#if leader === 1 && winner === 0}
-						<span class="indicator-item badge badge-secondary"> 🏃‍♀️ </span>
-					{:else if winner === 1}
-						<span class="indicator-item badge badge-primary"> 👑 </span>
-					{/if}
+	<div class="prose max-w-none text-center">
+		<h1 class="mx-2">USA Chains Bingo</h1>
+		{#if stage > guesses_attempted}
+			<!--Guess-->
+			<div class="grid justify-items-center">
+				<div class="alert alert-info max-w-prose">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						class="stroke-current shrink-0 w-6 h-6"
+						><path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+						/></svg
+					>
+					<span>{stage - guesses_attempted} new cards to be revealed.</span>
+					<div class="grid gap-2">
+						<button
+							class="btn"
+							on:click={() => {
+								picker.showModal();
+							}}>Guess the chains</button
+						>
+					</div>
 				</div>
-				<Score {entries} {revealed} bind:score bind:cells />
 			</div>
-			<div class="grid place-items-center">
-				<button
-					class="btn btn-primary"
-					on:click={() => {
-						picker.showModal();
-					}}>Input</button
-				>
-			</div>
-			<div class="prose grid">
-				<div class="indicator justify-self-center">
-					<h2 class="text-center mt-0">X's card</h2>
-					{#if leader === 2 && winner === 0}
-						<span class="indicator-item badge badge-secondary"> 🏃‍♂️ </span>
-					{:else if winner === 2}
-						<span class="indicator-item badge badge-primary"> 👑 </span>
-					{/if}
-				</div>
-				<Score entries={entries2} {revealed} bind:score={score2} bind:cells={cells2} />
-			</div>
-		</div>
+		{:else}
+			<!--Leader board-->
+			<Leaderboard
+				{revealed}
+				entry={[...others, { user_id: user, entry, guesses_attempted, guesses_correct }]}
+			/>
+		{/if}
+		<!-- Entries -->
 		<div class="prose mt-4 player-card">
-			<Score {entries} {revealed} />
+			<h2>Your entry</h2>
+			<Score {entry} {revealed} />
+		</div>
+		<div class="grid grid-cols-2 gap-2">
+			{#each others as other}
+				{@const entryO = other.entry}
+				{@const id = other.user_id}
+				<div class="prose mt-4 player-card text-center">
+					<h2>
+						{ids[id]}'s entry
+					</h2>
+					<Score entry={entryO} {revealed} />
+				</div>
+			{/each}
 		</div>
 	</div>
 </main>
 
 <dialog id="picker" class="modal" bind:this={picker}>
 	<div class="modal-box">
-		<InputGrid bind:selected {revealed} />
+		<GuessGrid on:guess={handleGuess} {revealed} {guesses_attempted} {nextAnswer} />
 	</div>
 	<form method="dialog" class="modal-backdrop">
 		<button> close </button>
@@ -125,22 +122,5 @@
 
 	main {
 		margin-top: 1rem;
-	}
-
-	.cards {
-		display: grid;
-		grid-template-columns: calc(50% - 40px - 0.5rem) 80px calc(50% - 40px - 0.5rem);
-		gap: 0.5rem;
-	}
-
-	@media (min-width: 768px) {
-		.player-card {
-			display: none;
-		}
-	}
-
-	.badge-primary,
-	.badge-secondary {
-		--tw-bg-opacity: 0.5;
 	}
 </style>

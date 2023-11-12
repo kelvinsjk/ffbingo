@@ -37,6 +37,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@neoconfetti/svelte": "^1.0.0",
 		"@supabase/auth-helpers-sveltekit": "^0.10.3",
 		"@supabase/supabase-js": "^2.37.0"
 	}

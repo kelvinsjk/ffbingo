@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Score from '$lib/Score.svelte';
 	import shuffle from 'lodash/shuffle';
-	import InputGrid from '$lib/InputGrid.svelte';
+	import InputGrid from '$lib/GuessGrid.svelte';
 
 	let picker: HTMLDialogElement;
 	let selected: number | undefined = undefined;
@@ -60,7 +60,7 @@
 						<span class="indicator-item badge badge-primary"> 👑 </span>
 					{/if}
 				</div>
-				<Score {entries} {revealed} bind:score bind:cells />
+				<Score entry={entries} {revealed} bind:score bind:cells />
 			</div>
 			<div class="grid place-items-center">
 				<button
@@ -79,11 +79,11 @@
 						<span class="indicator-item badge badge-primary"> 👑 </span>
 					{/if}
 				</div>
-				<Score entries={entries2} {revealed} bind:score={score2} bind:cells={cells2} />
+				<Score entry={entries2} {revealed} bind:score={score2} bind:cells={cells2} />
 			</div>
 		</div>
 		<div class="prose mt-4 player-card">
-			<Score {entries} {revealed} />
+			<Score entry={entries} {revealed} />
 		</div>
 	</div>
 </main>

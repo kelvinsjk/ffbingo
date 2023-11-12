@@ -15,6 +15,6 @@ export const actions = {
 			return fail(500, { message: 'Server error. Try again later.', success: false, email });
 		}
 
-		throw redirect(303, '/play');
+		throw redirect(303, '/');
 	}
 };

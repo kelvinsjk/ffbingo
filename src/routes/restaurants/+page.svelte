@@ -1,9 +1,7 @@
 <script lang="ts">
 	import List from '$lib/List.svelte';
-	import type { PageData } from './$types';
-
-	export let data: PageData;
-	const revealed = data.revealed;
+	import { answers } from '$lib/answers';
+	const revealed = answers.at(-1)!.revealed;
 </script>
 
 <svelte:head>

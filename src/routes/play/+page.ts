@@ -7,15 +7,15 @@ export const load = async ({ parent }) => {
 	}
 	const { data } = await supabase.from('bingo').select('*').eq('user_id', session.user.id);
 
-	let entries: (number | undefined)[] = new Array(24).fill(undefined);
+	let entry: (number | undefined)[] = new Array(24).fill(undefined);
 	if (data && data.length > 0) {
-		entries = data[0].entries;
+		entry = data[0].entry;
 	}
 
 	return {
 		user: session.user,
-		entries,
+		entry,
 		supabase,
-		session
+		session,
 	};
 };

@@ -2,7 +2,7 @@
 	// used in score page
 
 	import Qn from '$lib/Qn.svelte';
-	export let entries: number[] = Array.from(Array(24).keys());
+	export let entry: number[] = Array.from(Array(24).keys());
 	export let revealed = [0, 1, 2, 3, 4, 5, 26, 7, 16, 21, 6, 17, 23, 8, 15, 19];
 
 	export let score: number = 0;
@@ -37,30 +37,30 @@
 	$: [score, cells, rowInfo] = updateScore(revealed);
 
 	function updateScore(revealed: number[]): [number, number, boolean[]] {
-		const r1 = [0, 1, 2, 3, 4].every((entry) => revealed.includes(entries[entry]));
-		const r2 = [5, 6, 7, 8, 9].every((entry) => revealed.includes(entries[entry]));
-		const r3 = [10, 11, 12, 13].every((entry) => revealed.includes(entries[entry]));
-		const r4 = [14, 15, 16, 17, 18].every((entry) => revealed.includes(entries[entry]));
-		const r5 = [19, 20, 21, 22, 23].every((entry) => revealed.includes(entries[entry]));
-		const c1 = [0, 5, 10, 14, 19].every((entry) => revealed.includes(entries[entry]));
-		const c2 = [1, 6, 11, 15, 20].every((entry) => revealed.includes(entries[entry]));
-		const c3 = [2, 7, 16, 21].every((entry) => revealed.includes(entries[entry]));
-		const c4 = [3, 8, 12, 17, 22].every((entry) => revealed.includes(entries[entry]));
-		const c5 = [4, 9, 13, 18, 23].every((entry) => revealed.includes(entries[entry]));
-		const d1 = [0, 6, 17, 23].every((entry) => revealed.includes(entries[entry]));
-		const d2 = [4, 8, 15, 19].every((entry) => revealed.includes(entries[entry]));
+		const r1 = [0, 1, 2, 3, 4].every((e) => revealed.includes(entry[e]));
+		const r2 = [5, 6, 7, 8, 9].every((e) => revealed.includes(entry[e]));
+		const r3 = [10, 11, 12, 13].every((e) => revealed.includes(entry[e]));
+		const r4 = [14, 15, 16, 17, 18].every((e) => revealed.includes(entry[e]));
+		const r5 = [19, 20, 21, 22, 23].every((e) => revealed.includes(entry[e]));
+		const c1 = [0, 5, 10, 14, 19].every((e) => revealed.includes(entry[e]));
+		const c2 = [1, 6, 11, 15, 20].every((e) => revealed.includes(entry[e]));
+		const c3 = [2, 7, 16, 21].every((e) => revealed.includes(entry[e]));
+		const c4 = [3, 8, 12, 17, 22].every((e) => revealed.includes(entry[e]));
+		const c5 = [4, 9, 13, 18, 23].every((e) => revealed.includes(entry[e]));
+		const d1 = [0, 6, 17, 23].every((e) => revealed.includes(entry[e]));
+		const d2 = [4, 8, 15, 19].every((e) => revealed.includes(entry[e]));
 		const score = [r1, r2, r3, r4, r5, c1, c2, c3, c4, c5, d1, d2].reduce(
 			(acc, row) => acc + Number(row),
 			0
 		);
-		const cells = entries.reduce((acc, entry) => acc + Number(revealed.includes(entry)), 0);
+		const cells = entry.reduce((acc, entry) => acc + Number(revealed.includes(entry)), 0);
 		return [score, cells, [r1, r2, r3, r4, r5, c1, c2, c3, c4, c5, d1, d2]];
 	}
 </script>
 
 <section class="scorecard-wrapper">
 	<div class="card">
-		{#each entries as entry, i}
+		{#each entry as entry, i}
 			{@const correct = revealed.includes(entry)}
 			{@const id = `${Math.floor(entry / 26) + 1}-${(entry % 26) + 1}`}
 			<div class="item swap swap-flip" class:swap-active={correct}>

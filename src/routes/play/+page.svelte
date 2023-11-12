@@ -4,17 +4,19 @@
 
 	export let data: PageData;
 
-	let entries = data.entries.map((entry) => entry ?? undefined);
+	let entries = data.entry.map((e) => e ?? undefined);
 	const { supabase, session } = data;
 
 	$: updateEntries(entries);
 
-	async function updateEntries(entries: (number | undefined)[]) {
+	async function updateEntries(entry: (number | undefined)[]) {
 		if (session?.user?.id) {
-			const valid = entries.every((entry) => entry !== undefined) && entries.length === 24;
+			const valid = entry.every((e) => e !== undefined) && entry.length === 24;
 			const { data, error } = await supabase
 				.from('bingo')
-				.upsert({ entries, user_id: session.user.id, valid });
+				.update({ entry, valid })
+				.eq('user_id', session.user.id);
+			console.log(error);
 		}
 	}
 </script>
