@@ -15,8 +15,8 @@
 			const [lines, cells] = score(e.entry, revealed);
 			return {
 				...e,
-				score: lines,
-				line: cells,
+				score: cells,
+				line: lines,
 			};
 		});
 	}
