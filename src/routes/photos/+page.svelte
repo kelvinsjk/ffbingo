@@ -59,4 +59,10 @@
       <img src="/answers/{no}b.png" alt="logo" />
     </div>
   {/each}
+	<h2>Others</h2>
+	<h3>Philly Cheese Steak</h3>
+	<div class="grid grid-cols-2">
+		<img src="/photos/philly-a.png" alt="logo" />
+		<img src="/photos/philly-b.png" alt="logo" />
+	</div>
 </main>
