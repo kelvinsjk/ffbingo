@@ -81,11 +81,12 @@
 				{revealed}
 				entry={[...others, { user_id: user, entry, guesses_attempted, guesses_correct }]}
 			/>
+			<a class="btn my-4 btn-primary not-prose" href="/photos">Photos</a>
 		{/if}
 		<!-- Entries -->
 		<div class="prose mt-4 player-card">
 			<h2>Your entry</h2>
-			<Score {entry} {revealed} />
+			<Score {entry} {revealed} own={true} />
 		</div>
 		<div class="grid grid-cols-2 gap-2">
 			{#each others as other}

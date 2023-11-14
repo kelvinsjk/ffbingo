@@ -34,7 +34,15 @@
 </script>
 
 <div class="grid justify-items-center prose text-center">
-	<img src="/answers/{guesses_attempted + 1}a.png" alt="logo" />
+	<div
+		class="grid max-w-xs"
+		class:grid-cols-2={correct !== undefined}
+	>
+		<img src="/answers/{guesses_attempted + 1}a.png" alt="logo" />
+		{#if correct !== undefined}
+			<img src="/answers/{guesses_attempted + 1}b.png" alt="logo" />
+		{/if}
+	</div>
 	<h2 class="mt-2">Where is this from?</h2>
 	{#if correct}
 		<div>

@@ -7,6 +7,8 @@
 
 	export let score: number = 0;
 	export let cells: number = 0;
+	export let own = false;
+
 	let rowInfo: boolean[]; // [r1, r2, r3, r4, r5, c1, c2, c3, c4, c5, d1, d2]
 	const rowCheck = [
 		[0, 5, 10],
@@ -63,7 +65,10 @@
 		{#each entry as entry, i}
 			{@const correct = revealed.includes(entry)}
 			{@const id = `${Math.floor(entry / 26) + 1}-${(entry % 26) + 1}`}
-			<div class="item swap swap-flip" class:swap-active={correct}>
+			<div class="item swap swap-flip" 
+				class:swap-active={correct || own}
+				class:unopened={!correct && own}
+				>
 				<div class="swap-on" class:win={rowCheck[i].some((id) => rowInfo[id])}>
 					<img src="/logos/{id}.png" alt="logo" />
 				</div>
@@ -102,12 +107,11 @@
 		display: grid;
 		place-items: center;
 	}
-
-	.swap-on {
-		border: 3px solid #36d399;
+	.unopened{
+		opacity: 0.2;
 	}
 	.swap-on.win {
-		border-color: red;
+		border: 3px solid #36d399;
 	}
 
 	.swap-off {

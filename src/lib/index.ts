@@ -12,7 +12,7 @@ export const items = {
 	'1-10': "Arby's", // 9
 	'1-11': 'Chipotle', // 10
 	'1-12': "Jimmy John's", // 11
-	'1-13': 'Chick-fil-A', // 12
+	'1-13': 'Chick-fil-A', //! 12
 	'1-14': 'Panda Express', // 13
 	'1-15': 'Jack in the Box', // 14
 	'1-16': 'Panera Bread', // 15
@@ -39,5 +39,5 @@ export const items = {
 	'2-11': 'Olive Garden', // 36
 	'2-12': 'Cracker Barrel', // 37
 	'2-13': "Dickey's Barbecue Pit", // 38
-	'2-14': 'Texas Roadhouse / Longhorn Steakhouse' // 39
+	'2-14': 'Texas Roadhouse / Longhorn Steakhouse', // 39
 };
