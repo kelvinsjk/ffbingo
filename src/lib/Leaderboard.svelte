@@ -9,7 +9,7 @@
 	}
 	export let entry: Entry[];
 	export let revealed: number[];
-	let scores: Entry[];
+	let scores: Entry[] = [];
 	function updateScores(entry: Entry[]): Entry[] {
 		return entry.map((e) => {
 			const [lines, cells] = score(e.entry, revealed);
@@ -48,17 +48,20 @@
 		'36dfc698-b4de-4ab8-9ed9-156475c87971': 'R',
 		'9eb3754b-5e80-419c-a9ce-907e87a7ef85': 'S',
 	};
+	$: filteredScores = scores.filter((e) => e.user_id !== '05404d08-6428-4ef5-9173-1c21a4a9cdf8');
 </script>
 
 <div class="prose">
 	<h2>Leaderboard</h2>
 	<div class="grid prose">
 		<div />
-		<div class="text-center heading">H</div>
-		<div class="text-center heading">R</div>
-		<div class="text-center heading">S</div>
+		{#each filteredScores as entry}
+		<div class="text-center heading">
+			{ids[entry.user_id]}
+		</div>
+		{/each}
 		<div class="heading">Cells</div>
-		{#each scores.filter((e) => e.user_id !== '05404d08-6428-4ef5-9173-1c21a4a9cdf8') as entry}
+		{#each filteredScores as entry}
 			<div class="text-center">
 				{entry.score}
 			</div>

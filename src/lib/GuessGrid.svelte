@@ -39,7 +39,7 @@
 		class="grid max-w-xs"
 		class:grid-cols-2={correct !== undefined}
 	>
-		<img src="/answers/{guesses_attempted + 1}a.png" alt="logo" />
+		<img src="/answers/{guesses_attempted + 1}a.png" alt="logo" loading="lazy" />
 		{#if correct !== undefined}
 			<img src="/answers/{guesses_attempted + 1}b.png" alt="logo" />
 		{/if}
