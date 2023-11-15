@@ -25,7 +25,8 @@
 		console.log('dispatch');
 		window.setTimeout(() => {
 			dispatch('guess', {
-				correct
+				correct,
+				selected
 			});
 			correct = undefined;
 			selected = undefined;

@@ -16,6 +16,7 @@
 	};
 
 	import { answers } from '$lib/answers';
+	import {itemsArray} from '$lib';
 	import Leaderboard from '$lib/Leaderboard.svelte';
 
 	let revealed = answers![guesses_attempted].revealed;
@@ -23,7 +24,7 @@
 
 	const stage = answers!.length - 1;
 
-	async function handleGuess(event: CustomEvent<{ correct: boolean }>) {
+	async function handleGuess(event: CustomEvent<{ correct: boolean, selected: number }>) {
 		picker.close();
 		window.setTimeout(async () => {
 			guesses_attempted += 1;
@@ -31,6 +32,12 @@
 			nextAnswer = answers![guesses_attempted + 1]?.latest;
 			if (event.detail.correct) {
 				guesses_correct += 1;
+			} else {
+				await supabase.from('bingo_guesses').insert({
+					user_id: user,
+					guess_attempt: guesses_attempted,
+					guess: itemsArray[event.detail.selected],
+				})
 			}
 			await supabase
 				.from('bingo')
