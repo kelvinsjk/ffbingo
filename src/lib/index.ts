@@ -56,7 +56,7 @@ export const itemsArray = [
 	'Chipotle', // 10
 	"Jimmy John's", // 11
 	'Chick-fil-A', //! 12
-	'Panda Express', // 13
+	'Panda Express', //! 13
 	'Jack in the Box', // 14
 	'Panera Bread', //! 15
 	'Jersey Mike', // 16

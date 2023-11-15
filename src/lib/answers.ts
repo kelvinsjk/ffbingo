@@ -18,4 +18,8 @@ export const answers = [
 		revealed: [12, 15, 22, 9],
 		latest: 9,
 	},
+	{
+		revealed: [12, 15, 22, 9, 13],
+		latest: 13,
+	},
 ];
