@@ -72,7 +72,7 @@
 		<div class="heading">Guesses</div>
 		{#each scores.filter((e) => e.user_id !== '05404d08-6428-4ef5-9173-1c21a4a9cdf8') as entry}
 			<div class="text-center">
-				{entry.guesses_attempted} / {entry.guesses_correct}
+				{entry.guesses_correct} / {entry.guesses_attempted}
 			</div>
 		{/each}
 	</div>
