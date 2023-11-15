@@ -52,20 +52,20 @@ export const itemsArray = [
 	'Little Caesars', // 6
 	'KFC', // 7
 	'Sonic', // 8
-	"Arby's", // 9
+	"Arby's", //! 9
 	'Chipotle', // 10
 	"Jimmy John's", // 11
 	'Chick-fil-A', //! 12
 	'Panda Express', // 13
 	'Jack in the Box', // 14
-	'Panera Bread', // 15
+	'Panera Bread', //! 15
 	'Jersey Mike', // 16
 	'Five Guys', // 17
 	'Firehouse Subs', // 18
 	'Zaxby', // 19
 	"Checkers and Rally's", // 20
 	"Culver's", // 21
-	'Bojangles', // 22
+	'Bojangles', //! 22
 	"Steak 'n Shake", // 23
 	"Freddy's Frozen Custard & Steakburgers", // 24
 	'Quiznos', // 25
