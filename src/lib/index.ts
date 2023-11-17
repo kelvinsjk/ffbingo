@@ -54,7 +54,7 @@ export const itemsArray = [
 	'Sonic', // 8
 	"Arby's", //! 9
 	'Chipotle', // 10
-	"Jimmy John's", // 11
+	"Jimmy John's", //! 11
 	'Chick-fil-A', //! 12
 	'Panda Express', //! 13
 	'Jack in the Box', // 14
@@ -77,7 +77,7 @@ export const itemsArray = [
 	'Golden Corral', // 31
 	"Denny's", // 32
 	'IHOP', // 33
-	'Waffle House', // 34
+	'Waffle House', //! 34
 	"Chili's", // 35
 	'Olive Garden', //! 36
 	'Cracker Barrel', // 37
