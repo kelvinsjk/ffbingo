@@ -34,4 +34,12 @@ export const answers = [
 		latest: 11,
 		revealed: [12, 15, 22, 9, 13, 36, 34, 11],
 	},
+	{
+		latest: 5,
+		revealed: [12, 15, 22, 9, 13, 36, 34, 11, 5],
+	},
+	{
+		latest: 10,
+		revealed: [12, 15, 22, 9, 13, 36, 34, 11, 5, 10],
+	},
 ];

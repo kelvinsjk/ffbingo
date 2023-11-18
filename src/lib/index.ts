@@ -48,12 +48,12 @@ export const itemsArray = [
 	'Burger King', // 2
 	'Taco Bell', // 3
 	"Wendy's", // 4
-	'Dairy Queen', // 5
+	'Dairy Queen', //! 5
 	'Little Caesars', // 6
 	'KFC', // 7
 	'Sonic', // 8
 	"Arby's", //! 9
-	'Chipotle', // 10
+	'Chipotle', //! 10
 	"Jimmy John's", //! 11
 	'Chick-fil-A', //! 12
 	'Panda Express', //! 13
