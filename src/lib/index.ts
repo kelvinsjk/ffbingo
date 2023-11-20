@@ -80,7 +80,7 @@ export const itemsArray = [
 	'Waffle House', //! 34
 	"Chili's", // 35
 	'Olive Garden', //! 36
-	'Cracker Barrel', // 37
+	'Cracker Barrel', //! 37
 	"Dickey's Barbecue Pit", // 38
 	'Texas Roadhouse / Longhorn Steakhouse', // 39
 ];
