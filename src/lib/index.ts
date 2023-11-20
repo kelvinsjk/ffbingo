@@ -44,7 +44,7 @@ export const items = {
 
 export const itemsArray = [
 	"McDonald's", // 0
-	"Dunkin' Donuts", // 1
+	"Dunkin' Donuts", //! 1
 	'Burger King', // 2
 	'Taco Bell', // 3
 	"Wendy's", // 4
@@ -70,7 +70,7 @@ export const itemsArray = [
 	"Freddy's Frozen Custard & Steakburgers", // 24
 	'Quiznos', // 25
 	'Noodles & Company', // 26
-	'Einstein Bros. Bagels', // 27
+	'Einstein Bros. Bagels', //! 27
 	'Jamba Juice', // 28
 	"Applebee's", // 29
 	'The Cheesecake Factory', // 30
