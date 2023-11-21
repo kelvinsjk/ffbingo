@@ -46,7 +46,7 @@ export const itemsArray = [
 	"McDonald's", // 0
 	"Dunkin' Donuts", //! 1
 	'Burger King', // 2
-	'Taco Bell', // 3
+	'Taco Bell', //! 3
 	"Wendy's", // 4
 	'Dairy Queen', //! 5
 	'Little Caesars', // 6
@@ -74,7 +74,7 @@ export const itemsArray = [
 	'Jamba Juice', // 28
 	"Applebee's", // 29
 	'The Cheesecake Factory', // 30
-	'Golden Corral', // 31
+	'Golden Corral', //! 31
 	"Denny's", // 32
 	'IHOP', // 33
 	'Waffle House', //! 34

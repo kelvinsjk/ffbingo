@@ -79,7 +79,32 @@
 			</div>
 		{/each}
 	</div>
-	<div class="mt-4 p-4 winner text-xl">👑 First to line 1: &mdash;</div>
+	<div class="mt-4 p-4 winner text-xl consolation justify-center">
+		<div>
+			👑 First to line 1: 
+			Rachel
+		</div>
+	</div>
+	<div class="mt-4 p-4 winner text-xl consolation justify-center text-start">
+		<div>
+			🏅 Second to line 1: 
+			&mdash;
+		</div>
+		<div>
+			💩 Last place:
+			&mdash;
+		</div>
+	</div>
+	<div class="mt-4 p-4 winner text-xl consolation justify-center text-start">
+		<div>
+			🏆 Most cells: 
+			&mdash;
+		</div>
+		<div>
+			🎖️ Most guesses:
+			&mdash;
+		</div>
+	</div>
 </div>
 
 <style>
@@ -101,5 +126,8 @@
 		background-color: #3abff8;
 		font-weight: bold;
 		letter-spacing: 1px;
+	}
+	.consolation {
+		display: grid;
 	}
 </style>
